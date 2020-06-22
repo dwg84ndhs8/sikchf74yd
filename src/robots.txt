@@ -1,4 +1,5 @@
-User-agent: *
-Allow: /
+# www.robotstxt.org/
 
-Sitemap: https://jeffnovello.com/sitemap.xml
+# Allow crawling of all content
+User-agent: *
+Disallow:
