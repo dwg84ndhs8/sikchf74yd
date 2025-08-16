@@ -9,11 +9,13 @@ if (!ROOT) {
 
 const config = {
   // Your website's name, used for favicon meta tags
-  site_name: 'Jeff Novello',
+  // site_name: 'Jeff Novello',
+  site_name: 'Not Found',
 
   // Your website's description, used for favicon meta tags
-  site_description: 'A description of Jeff Novello',
-
+  // site_description: 'A description of Jeff Novello',
+  site_description: 'Not found',
+  
   // Your website's URL, used for sitemap
   site_url: 'https://jeffnovello.com',
 
