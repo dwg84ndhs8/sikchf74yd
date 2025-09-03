@@ -57,7 +57,7 @@ async function getGeolocationData(): Promise<{ region: string; [key: string]: st
   }
 
   const ipinfoWrapper = new IPinfoWrapper(token);
-  let geolocationData = { region: "Minnesota" };
+  let geolocationData = { region: "Arizona" };
 
   const ipinfo = await ipinfoWrapper.lookupIp(clientIP);
   geolocationData = { ...geolocationData, ...ipinfo };
