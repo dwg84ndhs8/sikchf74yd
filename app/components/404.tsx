@@ -1,0 +1,14 @@
+const NotFound = () => {
+  return (
+    <div className="container" id="container">
+      <div className="p-2 mb-2">
+        {/* <img src="images/not_found.png" alt="Domain not found" /> */}
+        <h1>This site has been blocked</h1>
+        <h2>The content of this site is in violation of our <a href="https://www.namecheap.com/legal/" target="_blank">terms of service</a>.</h2>
+        {/* <p>please contact abuse@namecheap.com for more info</p> */}
+      </div>
+    </div>
+  );
+};
+
+export default NotFound;
