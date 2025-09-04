@@ -6,6 +6,38 @@ import Default from './components/Default';
 import Redirect from './components/Redirect';
 import NotFound from './components/404';
 
+const defaultMetadata = {
+  title: "Jeff Novello is a Con Man",
+  description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
+  robots: "index, follow",
+  icons: {
+    icon: "/images/favicon.png",
+    shortcut: "/images/favicon.png",
+    apple: "/images/favicon.png"
+  },
+  openGraph: {
+    title: "Jeff Novello is a Con Man",
+    description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
+    type: "website",
+    locale: "en_US",
+    siteName: "Jeff Novello is a con man",
+    images: [
+      {
+        url: "/images/social.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Jeff Novello is a con man"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jeff Novello is a Con Man",
+    description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
+    images: ["/images/social.jpg"]
+  }
+};
+
 // Function to get the real client IP address
 function getClientIP(headersList: Headers): string | undefined {
   // Check various headers that might contain the real IP
@@ -68,6 +100,14 @@ async function getGeolocationData(headersList: Headers): Promise<{ region: strin
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
+
+  const userAgent = headersList.get('user-agent');
+  const bot = isbot(userAgent);
+
+  if (bot) {
+    return defaultMetadata;
+  }
+  
   const geolocationData = await getGeolocationData(headersList);
 
   if (!geolocationData || geolocationData.region === "Arizona") {
@@ -78,37 +118,7 @@ export async function generateMetadata(): Promise<Metadata> {
     }
   }
   
-  return {
-    title: "Jeff Novello is a Con Man",
-    description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
-    robots: "index, follow",
-    icons: {
-      icon: "/images/favicon.png",
-      shortcut: "/images/favicon.png",
-      apple: "/images/favicon.png"
-    },
-    openGraph: {
-      title: "Jeff Novello is a Con Man",
-      description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
-      type: "website",
-      locale: "en_US",
-      siteName: "Jeff Novello is a con man",
-      images: [
-        {
-          url: "/images/social.jpg",
-          width: 1200,
-          height: 630,
-          alt: "Jeff Novello is a con man"
-        }
-      ]
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Jeff Novello is a Con Man",
-      description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
-      images: ["/images/social.jpg"]
-    }
-  }
+  return defaultMetadata
 }
 
 export default async function Home() {
