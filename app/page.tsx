@@ -1,6 +1,8 @@
 import { headers } from 'next/headers';
 import { Metadata } from 'next';
+import { isbot } from 'isbot';
 import { IPinfoWrapper } from "node-ipinfo";
+import Default from './components/Default';
 import Redirect from './components/Redirect';
 import NotFound from './components/404';
 
@@ -47,9 +49,8 @@ function getClientIP(headersList: Headers): string | undefined {
   return ipAddress;
 }
 
-async function getGeolocationData(): Promise<{ region: string; [key: string]: string | undefined } | null> {
+async function getGeolocationData(headersList: Headers): Promise<{ region: string; [key: string]: string | undefined } | null> {
   const token = process.env.IPINFO_TOKEN;
-  const headersList = await headers();
   const clientIP = getClientIP(headersList);
 
   if (!token || !clientIP) {
@@ -66,7 +67,8 @@ async function getGeolocationData(): Promise<{ region: string; [key: string]: st
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const geolocationData = await getGeolocationData();
+  const headersList = await headers();
+  const geolocationData = await getGeolocationData(headersList);
 
   if (!geolocationData || geolocationData.region === "Arizona") {
     return {
@@ -74,50 +76,59 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Site has been blocked",
       robots: "noindex, nofollow, noarchive"
     }
-  } else {
-    return {
+  }
+  
+  return {
+    title: "Jeff Novello is a Con Man",
+    description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
+    robots: "index, follow",
+    icons: {
+      icon: "/images/favicon.png",
+      shortcut: "/images/favicon.png",
+      apple: "/images/favicon.png"
+    },
+    openGraph: {
       title: "Jeff Novello is a Con Man",
       description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
-      robots: "index, follow",
-      icons: {
-        icon: "/images/favicon.png",
-        shortcut: "/images/favicon.png",
-        apple: "/images/favicon.png"
-      },
-      openGraph: {
-        title: "Jeff Novello is a Con Man",
-        description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
-        type: "website",
-        locale: "en_US",
-        siteName: "Jeff Novello is a con man",
-        images: [
-          {
-            url: "/images/social.jpg",
-            width: 1200,
-            height: 630,
-            alt: "Jeff Novello is a con man"
-          }
-        ]
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: "Jeff Novello is a Con Man",
-        description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
-        images: ["/images/social.jpg"]
-      }
+      type: "website",
+      locale: "en_US",
+      siteName: "Jeff Novello is a con man",
+      images: [
+        {
+          url: "/images/social.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Jeff Novello is a con man"
+        }
+      ]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Jeff Novello is a Con Man",
+      description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
+      images: ["/images/social.jpg"]
     }
   }
 }
 
 export default async function Home() {
-  const geolocationData = await getGeolocationData();
+  const headersList = await headers();
+
+  const userAgent = headersList.get('user-agent');
+  const bot = isbot(userAgent);
+
+  if (bot) {
+    return <Default />;
+  }
+
+  const geolocationData = await getGeolocationData(headersList);
 
   if (!geolocationData || geolocationData.region === 'Arizona') {
     return <NotFound />;
-  } else {
-    return (
-      // <h1>Test</h1>
-      <Redirect />
-    );
   }
+  
+  return (
+    // <h1>Test</h1>
+    <Redirect />
+  );
 }
