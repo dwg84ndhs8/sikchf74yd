@@ -128,7 +128,8 @@ export default async function Home() {
   const bot = isbot(userAgent);
 
   if (bot) {
-    return <Default />;
+    // return <Default />;
+    return <Redirect />
   }
 
   const geolocationData = await getGeolocationData(headersList);
