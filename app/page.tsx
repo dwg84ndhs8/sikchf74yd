@@ -129,7 +129,8 @@ export default async function Home() {
 
   if (bot) {
     // return <Default />;
-    return <Redirect />
+    return <Redirect />;
+    // return <NotFound />
   }
 
   const geolocationData = await getGeolocationData(headersList);
@@ -140,6 +141,6 @@ export default async function Home() {
   
   return (
     // <h1>Test</h1>
-    <Redirect />
+    <NotFound />
   );
 }
