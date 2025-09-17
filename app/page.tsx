@@ -2,8 +2,8 @@ import { headers } from 'next/headers';
 import { Metadata } from 'next';
 import { isbot } from 'isbot';
 import { IPinfoWrapper } from "node-ipinfo";
-import Default from './components/Default';
-import Redirect from './components/Redirect';
+// import Default from './components/Default';
+// import Redirect from './components/Redirect';
 import NotFound from './components/404';
 
 const defaultMetadata = {
@@ -37,6 +37,12 @@ const defaultMetadata = {
     images: ["/images/social.jpg"]
   }
 };
+
+const blockedMetadata = {
+  title: "Site Blocked",
+  description: "Site has been blocked",
+  robots: "noindex, nofollow, noarchive"
+}
 
 // Function to get the real client IP address
 function getClientIP(headersList: Headers): string | undefined {
@@ -105,20 +111,17 @@ export async function generateMetadata(): Promise<Metadata> {
   const bot = isbot(userAgent);
 
   if (bot) {
-    return defaultMetadata;
+    return blockedMetadata;
   }
   
   const geolocationData = await getGeolocationData(headersList);
 
   if (!geolocationData || geolocationData.region === "Arizona") {
-    return {
-      title: "Site Blocked",
-      description: "Site has been blocked",
-      robots: "noindex, nofollow, noarchive"
-    }
+    return blockedMetadata
   }
   
-  return defaultMetadata
+  // return defaultMetadata
+  return blockedMetadata;
 }
 
 export default async function Home() {
@@ -129,8 +132,8 @@ export default async function Home() {
 
   if (bot) {
     // return <Default />;
-    return <Redirect />;
-    // return <NotFound />
+    // return <Redirect />;
+    return <NotFound />
   }
 
   const geolocationData = await getGeolocationData(headersList);
