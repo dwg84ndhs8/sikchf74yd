@@ -49,7 +49,12 @@ const blockedMetadata = {
     index: true,
     follow: true,
     nocache: false,
-  }
+  },
+  icons: {
+    icon: "/images/icons8-favicon-24.png",
+    shortcut: "/images/icons8-favicon-24.png",
+    apple: "/images/icons8-favicon-24.png"
+  },
 }
 
 // Function to get the real client IP address
