@@ -9,7 +9,11 @@ import NotFound from './components/404';
 const defaultMetadata = {
   title: "Jeff Novello is a Con Man",
   description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  },
   icons: {
     icon: "/images/favicon.png",
     shortcut: "/images/favicon.png",
@@ -41,7 +45,11 @@ const defaultMetadata = {
 const blockedMetadata = {
   title: "Site Blocked",
   description: "Site has been blocked",
-  robots: "index, follow"
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  }
 }
 
 // Function to get the real client IP address
