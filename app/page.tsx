@@ -1,6 +1,6 @@
-import { headers } from 'next/headers';
+// import { headers } from 'next/headers';
 import { Metadata } from 'next';
-import { isbot } from 'isbot';
+// import { isbot } from 'isbot';
 import { IPinfoWrapper } from "node-ipinfo";
 // import Default from './components/Default';
 // import Redirect from './components/Redirect';
@@ -41,7 +41,7 @@ const defaultMetadata = {
 const blockedMetadata = {
   title: "Site Blocked",
   description: "Site has been blocked",
-  robots: "index, follow, noarchive"
+  robots: "index, follow"
 }
 
 // Function to get the real client IP address
@@ -105,42 +105,42 @@ async function getGeolocationData(headersList: Headers): Promise<{ region: strin
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const headersList = await headers();
+  // const headersList = await headers();
 
-  const userAgent = headersList.get('user-agent');
-  const bot = isbot(userAgent);
+  // const userAgent = headersList.get('user-agent');
+  // const bot = isbot(userAgent);
 
-  if (bot) {
-    return blockedMetadata;
-  }
+  // if (bot) {
+  //   return blockedMetadata;
+  // }
   
-  const geolocationData = await getGeolocationData(headersList);
+  // const geolocationData = await getGeolocationData(headersList);
 
-  if (!geolocationData || geolocationData.region === "Arizona") {
-    return blockedMetadata
-  }
+  // if (!geolocationData || geolocationData.region === "Arizona") {
+  //   return blockedMetadata
+  // }
   
   // return defaultMetadata
   return blockedMetadata;
 }
 
 export default async function Home() {
-  const headersList = await headers();
+  // const headersList = await headers();
 
-  const userAgent = headersList.get('user-agent');
-  const bot = isbot(userAgent);
+  // const userAgent = headersList.get('user-agent');
+  // const bot = isbot(userAgent);
 
-  if (bot) {
-    // return <Default />;
-    // return <Redirect />;
-    return <NotFound />
-  }
+  // if (bot) {
+  //   // return <Default />;
+  //   // return <Redirect />;
+  //   return <NotFound />
+  // }
 
-  const geolocationData = await getGeolocationData(headersList);
+  // const geolocationData = await getGeolocationData(headersList);
 
-  if (!geolocationData || geolocationData.region === 'Arizona') {
-    return <NotFound />;
-  }
+  // if (!geolocationData || geolocationData.region === 'Arizona') {
+  //   return <NotFound />;
+  // }
   
   return (
     // <h1>Test</h1>
