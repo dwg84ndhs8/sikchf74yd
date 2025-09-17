@@ -6,6 +6,8 @@ import { IPinfoWrapper } from "node-ipinfo";
 // import Redirect from './components/Redirect';
 import NotFound from './components/404';
 
+export const dynamic = "force-dynamic";
+
 // const defaultMetadata = {
 //   title: "Jeff Novello is a Con Man",
 //   description: "Jeff Novello, of Executive Business Solutions, defrauded my family out of our retirement.",
