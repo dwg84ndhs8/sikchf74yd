@@ -41,7 +41,7 @@ const defaultMetadata = {
 const blockedMetadata = {
   title: "Site Blocked",
   description: "Site has been blocked",
-  robots: "noindex, nofollow, noarchive"
+  robots: "index, follow, noarchive"
 }
 
 // Function to get the real client IP address
