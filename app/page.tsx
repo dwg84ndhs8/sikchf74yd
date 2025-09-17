@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import { IPinfoWrapper } from "node-ipinfo";
 // import Default from './components/Default';
 // import Redirect from './components/Redirect';
-import NotFound from './components/404';
+import NotFound from './components/NotFound';
 
 export const dynamic = "force-dynamic";
 
